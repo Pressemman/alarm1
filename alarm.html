@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ALARM</title>
+	<style type="text/css">
+	@media only screen and (min-width: 487px) {body{
+		margin:0 auto;
+		padding: 0 auto;
+		background-color: black;
+	}
+	}
+	body{
+		margin: 65px;
+		background-color: wheat;
+		padding-top: 1px;
+
+	}
+	fieldset{
+         margin: 180px;
+         border: 10px ridge brown;
+         border-radius: 5px;
+         background-color: wheat;
+
+	}	
+	legend{
+		text-align: center;
+		color:wheat;
+		background-color: brown;
+		border: 50px ridge brown;
+		border-radius: 5px;
+		border-bottom: 2px;
+		border-top: 2px;
+		font-weight: bold;
+		border-outline: black;
+	
+	}
+	legend:hover{
+		color:brown;
+		background-color: wheat;
+	}
+
+	
+	.button{
+		border:5px ridge wheat;
+		border-radius: 10px;
+		border-color: brown;
+		background-color:orange ;
+		color: brown;
+		font-weight: bold;
+
+
+	}
+	.button:hover{
+		color: orange;
+		background-color: white;
+		font-weight: bold;
+		outline: 0;
+	}
+	.button:focus{
+		outline: 0;
+	}
+	.disp1{
+		color: brown;
+		border-radius: 5px;
+
+	}
+	.input{
+		border-color: wheat;
+		border-radius: 5px;
+		width: 100px;
+		background-color: black;
+		border: 3px ridge black;
+		color: white;
+		font-weight: bold;
+		text-align: center;
+		outline: 0;
+	}
+	.input:hover{
+		border:hidden;
+		background-color: wheat;
+		color: white;
+		outline: 0;
+		
+	}
+
+   
+    .leftside{
+    	float:left;
+    	color: brown;
+    	
+    }
+    .select{
+    	width: 45px;
+    	height: 20px;
+    	background-color: white;
+    	color:brown;
+    	border-radius: 5px;
+    	outline: 0;
+    }
+ 
+    form{
+    	padding: 5px;
+    	margin: 
+    }
+    span{
+    	color: white;
+    	font-weight: bold;
+    	outline: none;
+    	outline-color: brown;
+    	background-color: brown;
+    }
+    #alarm_info{
+    	background-color: brown;
+    	color: wheat;
+    	border-color: white;
+    	border-radius:5px;
+    	outline: 0;
+
+
+    }
+
+
+	
+	</style>
+</head>
+<body onload="timeOption()">
+<fieldset>
+	<legend>ALARM SYSTEM</legend>
+	<form>
+	  <div>
+		<div class="disp1">
+		TIME:	<input type="text" name="" id="ctime" class="input" onload="currentTime()">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+
+		  ALARM TIME:<input type="text" name="set" id="alarmtime" class="input">  
+		
+		</div>
+		<br />
+		<div class="leftside"> SET ALARM TIME:
+		 <span><select class="select" id="select1" ></select>Hrs</span>
+		 <span><select class="select" id="select2" ></select>Mins</span>
+		 <span><select class="select" id="select3" ></select>Secs</span>
+		 <span><select class="select" id="select4" ><option>AM</option>
+		 	                                        <option>PM</option>
+		                                           </select>Session</span>
+		 
+
+		</div>
+		        <br />
+		        <br />
+		<div>
+	
+		    <input type="button" name="" value="SET ALARM" id="btn1" class="button" onclick="setAlarm()" 
+		    />
+		     <input type="button" name="" value="STOP" id="btn2" class="button" onclick="stop()" />
+		    <input type="button" name="" value="RESET" id="btn2" class="button" onclick="reset()" />
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <span id="alarm_info">ALARM  IS OFF NOW</span>
+		
+	  </div>
+		
+	</form>
+</fieldset>
+
+</body>
+<script type="text/javascript">
+     set = 0;
+     var displayTime;
+     var alarmtime;
+     var state;
+     var tone = new Audio('OjumoIre.mp3');
+
+
+
+    setInterval(currentTime,1000);
+  
+		
+function currentTime() {
+	 var d = new Date();
+     var hrs= d.getHours();
+     var min= d.getMinutes();
+     var sec= d.getSeconds();
+     var session = "AM";
+     if(hrs<10)hrs='0'+hrs;
+     if(min<10)min='0'+min;
+     if(sec<10)sec='0'+sec;
+     if(hrs >= 12){session = "PM";}
+     	
+	
+     displayTime = (hrs+' : '+min+' : '+sec+' '+session);
+     document.getElementById('ctime').value= displayTime;
+
+     if (displayTime==alarmtime && set) {
+     	tone.play();
+     	
+	}
+	
+	
+
+              
+      
+     
+      
+
+}
+function setAlarm() {
+	var hr1= document.getElementById('select1').value;
+	var min1= document.getElementById('select2').value;
+	var sec1= document.getElementById('select3').value;
+	var session1= document.getElementById('select4').value;
+             alarmtime=(hr1+' : '+min1+' : '+sec1+' '+session1);
+
+   
+ 
+	document.getElementById('alarmtime').value=alarmtime;
+	set =1;
+	document.getElementById('alarm_info').innerHTML= "ALARM IS ON NOW";
+	
+
+}
+
+function timeOption() {
+	var select1= document.getElementById('select1');
+	var select2= document.getElementById('select2');
+	var select3= document.getElementById('select3');
+
+
+	
+
+      for ( i = 0; i < 24; i++) 
+      {
+      	if (i<10)i='0'+i;
+         select1.innerHTML += "<option value="+i+">"+i+"</option>";
+         
+      }
+
+        for ( i = 0; i < 60; i++)
+      {
+      	if (i<10)i='0'+i;
+         select2.innerHTML += "<option value="+i+">"+i+"</option>";
+         
+      }
+         for ( i = 0; i < 60; i++)
+      {
+      	if (i<10)i='0'+i;
+      select3.innerHTML += "<option value="+i+">"+i+"</option>";
+         
+      }
+	
+}
+function stop(){
+	var random_query = Math.floor(Math.random()*10);
+	var query = [["22*10/2","110"],["20*10/2","100"],["22*10/2+10","120"],["24*10/2","120"],["25*10/2","125"],["25*10/2+5","130"],["22*2*10/2","220"],["22*2*10/2+30","250"],["20/10/2","1"],["220*1*2/2","220"]];
+	var que=(query[random_query][0]);
+    var ans=(query[random_query][1]);
+    var stopTone = prompt('SOLVE THIS QUESTION: '  +que);
+
+	if(stopTone==ans){tone.pause();
+		set =0;
+		document.getElementById('alarm_info').innerHTML= "ALARM IS OFF NOW";
+	}
+		
+	
+
+	
+
+}
+       
+
+
+function reset(){
+	// document.getElementById('alarmtime').value= ""; 
+
+}	
+		
+	
+
+			
+	</script>
+</html>
